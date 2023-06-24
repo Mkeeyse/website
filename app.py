@@ -87,9 +87,9 @@ def admin_login():
 @app.route('/admin')
 @admin_required
 def admin():
-    users = get_user_info()
+    users = get_user_info(session['id'])
 
-    return render_template('admin.html', users=users)
+    return render_template('admin.html', user_info=users)
 
 
 if __name__ == "__main__":

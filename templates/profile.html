@@ -8,10 +8,18 @@
 </head>
 <body>
     <h1 class="profile-heading">User Profile</h1>
-    <p><strong>Username:</strong> <span class="username">{{ user_info.username }}</span></p>
-    <p><strong>Email:</strong> <span class="email">{{ user_info.email }}</span></p>
-    <p><strong>Department:</strong> <span class="department">{{ user_info.department }}</span></p>
+    <div class="profile-info-container">
+        <span class="profile-info-label"><strong>Username:</strong></span>
+        <span class="profile-info-value">{{ user_info.username }}</span>
+    </div>
+    <div class="profile-info-container">
+        <span class="profile-info-label"><strong>Email:</strong></span>
+        <span class="profile-info-value">{{ user_info.email }}</span>
+    </div>
+    <div class="profile-info-container">
+        <span class="profile-info-label"><strong>Department:</strong></span>
+        <span class="profile-info-value">{{ user_info.department }}</span>
+    </div>
     <!-- Add more user information if needed -->
 </body>
 </html>
-
