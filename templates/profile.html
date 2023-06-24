@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    <h1 class="profile-heading">User Profile</h1>
+    <p><strong>Username:</strong> <span class="username">{{ user_info.username }}</span></p>
+    <p><strong>Email:</strong> <span class="email">{{ user_info.email }}</span></p>
+    <p><strong>Department:</strong> <span class="department">{{ user_info.department }}</span></p>
+    <!-- Add more user information if needed -->
+</body>
+</html>
+
