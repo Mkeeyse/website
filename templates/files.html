@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/files.css') }}">
+</head>
+<body>
+    <h1>File Information</h1>
+
+    <div class="add-search-container">
+        <div class="add-button">
+            <button>Add file</button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+    </div>
+
+   <!-- Rest of the HTML content -->
+
+<div class="table-container">
+    <div class="table-header">
+        <span>File Number</span>
+        <span>Date Added</span>
+        <span>Category/Sub Category</span>
+        <span>Ref Num</span>
+        <span>Title</span>
+        <span>Status</span>
+        <span>Action</span>
+    </div>
+
+    {% for file in files %}
+    <div class="table-row">
+        <span>{{ file.file_number }}</span>
+        <span>{{ file.date_added }}</span>
+        <span>{{ file.category }} / {{ file.sub_category }}</span>
+        <span>{{ file.ref_num }}</span>
+        <span>{{ file.title }}</span>
+        <span>{{ file.status }}</span>
+        <span>Action Button</span>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Rest of the HTML content -->
+
+
+       
+        <!-- Add more table rows as needed -->
+
+    </div>
+
+
+</body>
+</html>
