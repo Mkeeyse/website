@@ -51,20 +51,20 @@
         <button id="prev-button" onclick="previousPage()">Previous</button>
         <button id="next-button" onclick="nextPage()">Next</button>
     </div>
-   <div id="add-file-form-container" style="display: none;">
-  <form id="add-file-form">
-    <input type="text" name="file_number" placeholder="File Number" required>
-    <input type="text" name="date_added" placeholder="Date Added" required>
-    <input type="text" name="category" placeholder="Category" required>
-    <input type="text" name="ref_num" placeholder="Reference Number" required>
-    <input type="text" name="title" placeholder="Title" required>
-    <input type="text" name="status" placeholder="Status" required>
-    <div class="button-container">
-      <button id="submit-button" type="submit">Submit</button>
-      <button id="cancel-button" type="button">Cancel</button>
+    <div id="add-file-form-container" style="display: none;">
+        <form id="add-file-form">
+            <input type="text" name="file_number" placeholder="File Number" required>
+            <input type="text" name="date_added" placeholder="Date Added" required>
+            <input type="text" name="category" placeholder="Category" required>
+            <input type="text" name="ref_num" placeholder="Reference Number" required>
+            <input type="text" name="title" placeholder="Title" required>
+            <input type="text" name="status" placeholder="Status" required>
+            <div class="button-container">
+                <button id="submit-button" type="submit">Submit</button>
+                <button id="cancel-button" type="button">Cancel</button>
+            </div>
+        </form>
     </div>
-  </form>
-</div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
@@ -84,10 +84,10 @@
                 { file_number: "009", date_added: "2023-06-17", category: "Category 1", ref_num: "REF009", title: "File 9", status: "Active" },
                 { file_number: "010", date_added: "2023-06-16", category: "Category 3", ref_num: "REF010", title: "File 10", status: "Active" }
             ];
-            
+
             var tableBody = document.querySelector("#file-table tbody");
             var html = "";
-            
+
             files.forEach(function (file) {
                 html += `
                 <tr>
@@ -104,16 +104,21 @@
                 </tr>
                 `;
             });
-            
+
             tableBody.innerHTML = html;
-            
+
             initializeFileTable();
-        });
-        
-        // Add an event listener to the cancel button
-        document.getElementById("cancel-button").addEventListener("click", function(event) {
-            event.preventDefault();
-            document.getElementById("add-file-form-container").style.display = "none";
+
+            // Add an event listener to the "Add File" button
+            document.getElementById("add-file-button").addEventListener("click", function () {
+                document.getElementById("add-file-form-container").style.display = "block";
+            });
+
+            // Add an event listener to the cancel button
+            document.getElementById("cancel-button").addEventListener("click", function (event) {
+                event.preventDefault();
+                document.getElementById("add-file-form-container").style.display = "none";
+            });
         });
     </script>
 </body>

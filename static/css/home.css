@@ -35,10 +35,13 @@ body{
 
 /* Sidebar start here  */
 .sidebar {
+    position:fixed;
     background: #755c7a;
+    margin-left:29px;
     width: 200px;
     height: 100%;
-    top: 0;
+    top: 20%;
+    bottom:200%;
     left: 0;
     z-index: 1;
     padding: 12px 10px;

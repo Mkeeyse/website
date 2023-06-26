@@ -79,8 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var cancelButton = document.getElementById("cancel-button");
   cancelButton.addEventListener("click", function () {
     var addFileFormContainer = document.getElementById("add-file-form-container");
-    var addFileForm = document.getElementById("add-file-form");
-    addFileForm.reset();
+    var addFileButton = document.getElementById("add-file-button");
+
+    // Hide the form container and display the "Add File" button
     addFileFormContainer.style.display = "none";
     addFileButton.style.display = "block";
   });
@@ -132,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Reset the form after submission
     addFileForm.reset();
     var addFileFormContainer = document.getElementById("add-file-form-container");
+    var addFileButton = document.getElementById("add-file-button");
     addFileFormContainer.style.display = "none";
     addFileButton.style.display = "block";
   });
