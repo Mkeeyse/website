@@ -16,57 +16,82 @@ else:
     # Establish a connection to the database
     engine = create_engine(db_conn)
 
-def login_user(username, password):
-    with engine.connect() as connection:
-        result = connection.execute(
-            text("SELECT * FROM User WHERE user_name = :username AND user_password = :password"),
-            {"username": username, "password": password}
-        )
-        record = result.fetchone()
-
-    if record:
-        user_info = {
-            'id': record[0],
-            'username': record[1],
-            'is_admin': record[5]
-        }
-        return user_info
-    else:
-        return None
-
-def get_user_info(user_id=None):
-    with engine.connect() as connection:
-        if user_id:
+    def login_user(username, password):
+        with engine.connect() as connection:
             result = connection.execute(
-                text("SELECT * FROM User WHERE id = :user_id"),
-                {"user_id": user_id}
+                text("SELECT * FROM User WHERE user_name = :username AND user_password = :password"),
+                {"username": username, "password": password}
             )
             record = result.fetchone()
-            if record:
-                user_info = {
-                    'id': record[0],
-                    'username': record[1],
-                    'department': record[4],
-                    'email': record[2]
-                }
-                return user_info
-            else:
-                return None
+
+        if record:
+            user_info = {
+                'id': record[0],
+                'username': record[1],
+                'is_admin': record[5]
+            }
+            return user_info
         else:
+            return None
+
+    def get_user_info(user_id=None):
+        with engine.connect() as connection:
+            if user_id:
+                result = connection.execute(
+                    text("SELECT * FROM User WHERE id = :user_id"),
+                    {"user_id": user_id}
+                )
+                record = result.fetchone()
+                if record:
+                    user_info = {
+                        'id': record[0],
+                        'username': record[1],
+                        'department': record[4],
+                        'email': record[2]
+                    }
+                    return user_info
+                else:
+                    return None
+            else:
+                result = connection.execute(
+                    text("SELECT * FROM User")
+                )
+                users = result.fetchall()
+
+                user_info_list = []
+                for record in users:
+                    user_info = {
+                        'id': record[0],
+                        'username': record[1],
+                        'department': record[4],
+                        'email': record[2]
+                    }
+                    user_info_list.append(user_info)
+
+                return user_info_list
+
+    def get_file_info():
+        # Perform the database query to retrieve file information
+        with engine.connect() as connection:
             result = connection.execute(
-                text("SELECT * FROM User")
+                text("SELECT file_number, date_added, category, ref_num, title, status FROM file")
             )
-            users = result.fetchall()
 
-            user_info_list = []
-            for record in users:
-                user_info = {
-                    'id': record[0],
-                    'username': record[1],
-                    'department': record[4],
-                    'email': record[2]
+            # Create a list to store the file information
+            files = []
+
+            # Iterate over the query result and extract the file information
+            for record in result:
+                file_info = {
+                    'file_number': record[0],
+                    'date_added': record[1],
+                    'category': record[2],
+                    'ref_num': record[3],
+                    'title': record[4],
+                    'status': record[5]
                 }
-                user_info_list.append(user_info)
+                files.append(file_info)
 
-            return user_info_list
+            return files
 
+    # Testing if it's working

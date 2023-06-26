@@ -71,25 +71,29 @@ def get_user_info(user_id=None):
             return user_info_list
 
 def get_file_info():
+    # Perform the database query to retrieve file information
     with engine.connect() as connection:
-        result = connection.execute(text("SELECT * FROM file"))
-        files = result.fetchall()
+        result = connection.execute(
+            text("SELECT file_number, date_added, category, ref_num, title, status FROM file")
+        )
 
-        file_info_list = []
-        for record in files:
+        # Create a list to store the file information
+        files = []
+
+        # Iterate over the query result and extract the file information
+        for record in result:
             file_info = {
                 'file_number': record[0],
-                'user_id': record[1],
-                'date_added': record[2],
-                'category': record[3],
-                'sub_category': record[4],
-                'ref_num': record[5],
-                'title': record[6],
-                'status': record[7]
+                'date_added': record[1],
+                'category': record[2],
+                'ref_num': record[3],
+                'title': record[4],
+                'status': record[5]
             }
-            file_info_list.append(file_info)
+            files.append(file_info)
 
-        return file_info_list
+        return files
+
 
 # Test the functions
 if __name__ == '__main__':
@@ -110,10 +114,8 @@ if __name__ == '__main__':
     files = get_file_info()
     for file in files:
         print("File Number:", file['file_number'])
-        print("User ID:", file['user_id'])
         print("Date Added:", file['date_added'])
         print("Category:", file['category'])
-        print("Sub Category:", file['sub_category'])
         print("Reference Number:", file['ref_num'])
         print("Title:", file['title'])
         print("Status:", file['status'])

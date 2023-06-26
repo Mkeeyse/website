@@ -1,21 +1,97 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Get the files link and main section element
-  const filesLink = document.querySelector('#files-link');
-  const mainSection = document.querySelector('#main-section');
+var currentPage = 0;
+var pageSize = 7; // Number of rows per page
+var rows;
 
-  // Add click event listener to the files link
-  filesLink.addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default link behavior
+function initializeFileTable() {
+  var table = document.getElementById("file-table");
+  rows = table.rows;
+  showPage(currentPage);
+}
 
-    // Make an AJAX request to retrieve the file information
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/files', true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        // Update the content of the main section with the file information
-        mainSection.innerHTML = xhr.responseText;
-      }
-    };
-    xhr.send();
+function showPage(page) {
+  var startIndex = page * pageSize;
+  var endIndex = startIndex + pageSize;
+
+  for (var i = 0; i < rows.length; i++) {
+    if (i >= startIndex && i < endIndex) {
+      rows[i].style.display = "table-row";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+}
+
+function previousPage() {
+  if (currentPage > 0) {
+    currentPage--;
+    showPage(currentPage);
+  }
+}
+
+function nextPage() {
+  if (currentPage < rows.length / pageSize - 1) {
+    currentPage++;
+    showPage(currentPage);
+  }
+}
+
+function searchFiles() {
+  var input = document.getElementById("search-input").value.toUpperCase();
+
+  for (var i = 0; i < rows.length; i++) {
+    var fileNumber = rows[i].cells[0].innerText.toUpperCase();
+    var dateAdded = rows[i].cells[1].innerText.toUpperCase();
+    var category = rows[i].cells[2].innerText.toUpperCase();
+    var refNum = rows[i].cells[3].innerText.toUpperCase();
+    var title = rows[i].cells[4].innerText.toUpperCase();
+    var status = rows[i].cells[5].innerText.toUpperCase();
+
+    if (input === "") {
+      showPage(currentPage); // Display the current page without filtering
+      return;
+    } else if (
+      fileNumber.indexOf(input) > -1 ||
+      dateAdded.indexOf(input) > -1 ||
+      category.indexOf(input) > -1 ||
+      refNum.indexOf(input) > -1 ||
+      title.indexOf(input) > -1 ||
+      status.indexOf(input) > -1
+    ) {
+      rows[i].style.display = "table-row";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initializeFileTable();
+
+  // Add event listener for the "Add File" button
+  var addFileButton = document.getElementById("add-file-button");
+  addFileButton.addEventListener("click", function () {
+    var addFileFormContainer = document.getElementById("add-file-form-container");
+    addFileFormContainer.style.display = "block";
+    addFileButton.style.display = "none";
+  });
+
+  // Add event listener for the "Submit" button in the add file form
+  var addFileForm = document.getElementById("add-file-form");
+  addFileForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var form = $(this);
+
+    $.ajax({
+      url: "/add-file",
+      type: "POST",
+      data: form.serialize(),
+      success: function (response) {
+        alert(response);
+        location.reload(); // Refresh the page after adding the file
+      },
+      error: function (xhr) {
+        alert("Error adding file: " + xhr.responseText);
+      },
+    });
   });
 });

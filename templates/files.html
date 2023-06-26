@@ -1,59 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Information</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/files.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <style>
+        /* CSS styles remain the same */
+    </style>
 </head>
 <body>
-    <h1>File Information</h1>
-
-    <div class="add-search-container">
-        <div class="add-button">
-            <button>Add file</button>
-        </div>
-
+    <div class="header-container">
+        <h2>File Information</h2>
         <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <button>Search</button>
+            <input type="text" id="search-input" placeholder="Search..." onkeyup="searchFiles()">
+            <button id="search-button" onclick="searchFiles()">Search</button>
         </div>
     </div>
-
-   <!-- Rest of the HTML content -->
-
-<div class="table-container">
-    <div class="table-header">
-        <span>File Number</span>
-        <span>Date Added</span>
-        <span>Category/Sub Category</span>
-        <span>Ref Num</span>
-        <span>Title</span>
-        <span>Status</span>
-        <span>Action</span>
+    <div class="button-container">
+        <button id="add-file-button">Add File</button>
     </div>
-
-    {% for file in files %}
-    <div class="table-row">
-        <span>{{ file.file_number }}</span>
-        <span>{{ file.date_added }}</span>
-        <span>{{ file.category }} / {{ file.sub_category }}</span>
-        <span>{{ file.ref_num }}</span>
-        <span>{{ file.title }}</span>
-        <span>{{ file.status }}</span>
-        <span>Action Button</span>
+    <table id="file-table" class="display">
+        <thead>
+            <tr>
+                <th>File Number</th>
+                <th>Date Added</th>
+                <th>Category</th>
+                <th>Reference Number</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.file_number }}</td>
+                <td>{{ file.date_added }}</td>
+                <td>{{ file.category }}</td>
+                <td>{{ file.ref_num }}</td>
+                <td>{{ file.title }}</td>
+                <td>{{ file.status }}</td>
+                <td>
+                    <button class="update-button">Update</button>
+                    <button class="delete-button">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination-container">
+        <button id="prev-button" onclick="previousPage()">Previous</button>
+        <button id="next-button" onclick="nextPage()">Next</button>
     </div>
-    {% endfor %}
-</div>
-
-<!-- Rest of the HTML content -->
-
-
-       
-        <!-- Add more table rows as needed -->
-
+    <div id="add-file-form-container" style="display: none;">
+        <form id="add-file-form">
+            <input type="text" name="file_number" placeholder="File Number" required>
+            <input type="text" name="date_added" placeholder="Date Added" required>
+            <input type="text" name="category" placeholder="Category" required>
+            <input type="text" name="ref_num" placeholder="Reference Number" required>
+            <input type="text" name="title" placeholder="Title" required>
+            <input type="text" name="status" placeholder="Status" required>
+            <button type="submit">Submit</button>
+        </form>
     </div>
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="{{ url_for('static', filename='javascript/files.js') }}"></script>
 </body>
 </html>

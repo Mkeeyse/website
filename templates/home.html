@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -22,9 +22,6 @@
   </style>
 </head>
 <body>
-  <script>
-    const user_info = {{ user_info | tojson }};
-  </script>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -90,7 +87,29 @@
       </div>
     </div>
   </div>
-  <script src="{{ url_for('static', filename='javascript/files.js') }}"></script>
+  
+  <script>
+    const filesLink = document.getElementById('files-link');
+    const mainSection = document.getElementById('main-section');
+
+    filesLink.addEventListener('click', handleFilesLinkClick);
+
+    function handleFilesLinkClick(event) {
+      event.preventDefault();
+
+      fetch('{{ url_for("files") }}')
+        .then(response => response.text())
+        .then(data => {
+          mainSection.innerHTML = data;
+          initializeFileTable();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+  
   <script src="{{ url_for('static', filename='javascript/profile.js') }}"></script>
+  <script src="{{ url_for('static', filename='javascript/files.js') }}"></script>
 </body>
 </html>
