@@ -51,19 +51,70 @@
         <button id="prev-button" onclick="previousPage()">Previous</button>
         <button id="next-button" onclick="nextPage()">Next</button>
     </div>
-    <div id="add-file-form-container" style="display: none;">
-        <form id="add-file-form">
-            <input type="text" name="file_number" placeholder="File Number" required>
-            <input type="text" name="date_added" placeholder="Date Added" required>
-            <input type="text" name="category" placeholder="Category" required>
-            <input type="text" name="ref_num" placeholder="Reference Number" required>
-            <input type="text" name="title" placeholder="Title" required>
-            <input type="text" name="status" placeholder="Status" required>
-            <button type="submit">Submit</button>
-        </form>
+   <div id="add-file-form-container" style="display: none;">
+  <form id="add-file-form">
+    <input type="text" name="file_number" placeholder="File Number" required>
+    <input type="text" name="date_added" placeholder="Date Added" required>
+    <input type="text" name="category" placeholder="Category" required>
+    <input type="text" name="ref_num" placeholder="Reference Number" required>
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="status" placeholder="Status" required>
+    <div class="button-container">
+      <button id="submit-button" type="submit">Submit</button>
+      <button id="cancel-button" type="button">Cancel</button>
     </div>
+  </form>
+</div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="{{ url_for('static', filename='javascript/files.js') }}"></script>
+    <script>
+        // Add this script section to load the file data and initialize the table
+        document.addEventListener("DOMContentLoaded", function () {
+            var files = [
+                { file_number: "001", date_added: "2023-06-25", category: "Category 1", ref_num: "REF001", title: "File 1", status: "Active" },
+                { file_number: "002", date_added: "2023-06-24", category: "Category 2", ref_num: "REF002", title: "File 2", status: "Active" },
+                { file_number: "003", date_added: "2023-06-23", category: "Category 1", ref_num: "REF003", title: "File 3", status: "Inactive" },
+                { file_number: "004", date_added: "2023-06-22", category: "Category 3", ref_num: "REF004", title: "File 4", status: "Active" },
+                { file_number: "005", date_added: "2023-06-21", category: "Category 2", ref_num: "REF005", title: "File 5", status: "Inactive" },
+                { file_number: "006", date_added: "2023-06-20", category: "Category 1", ref_num: "REF006", title: "File 6", status: "Active" },
+                { file_number: "007", date_added: "2023-06-19", category: "Category 3", ref_num: "REF007", title: "File 7", status: "Active" },
+                { file_number: "008", date_added: "2023-06-18", category: "Category 2", ref_num: "REF008", title: "File 8", status: "Inactive" },
+                { file_number: "009", date_added: "2023-06-17", category: "Category 1", ref_num: "REF009", title: "File 9", status: "Active" },
+                { file_number: "010", date_added: "2023-06-16", category: "Category 3", ref_num: "REF010", title: "File 10", status: "Active" }
+            ];
+            
+            var tableBody = document.querySelector("#file-table tbody");
+            var html = "";
+            
+            files.forEach(function (file) {
+                html += `
+                <tr>
+                    <td>${file.file_number}</td>
+                    <td>${file.date_added}</td>
+                    <td>${file.category}</td>
+                    <td>${file.ref_num}</td>
+                    <td>${file.title}</td>
+                    <td>${file.status}</td>
+                    <td>
+                        <button class="update-button">Update</button>
+                        <button class="delete-button">Delete</button>
+                    </td>
+                </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = html;
+            
+            initializeFileTable();
+        });
+        
+        // Add an event listener to the cancel button
+        document.getElementById("cancel-button").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.getElementById("add-file-form-container").style.display = "none";
+        });
+    </script>
 </body>
 </html>

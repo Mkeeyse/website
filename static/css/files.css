@@ -121,12 +121,145 @@ h2 {
   color: #fff;
   border: none;
   cursor: pointer;
+  margin-bottom: 10px;
+  display: inline-block; /* Add this line to make the button appear inline */
 }
 
 #add-file-button:hover {
   background-color: #663e61;
 }
 
+/* Add File form container styles */
+#add-file-form-container {
+  display: none;
+  position: fixed;
+  top: 10%;
+  right: 0; /* Adjusted position to the right */
+  left:30%;
+  width: 100%;
+  height: 65%;
+  background-color: none;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align to the right */
+}
+
+
+
+/* Add File form styles */
+#add-file-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+/* Form field styles */
+#add-file-form label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+#add-file-form input[type="text"],
+#add-file-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Submit button styles */
+#add-file-form #submit-button {
+  padding: 12px 24px;
+  background-color: #755c7a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px; /* Added margin-bottom to create spacing */
+  
+}
+
+#add-file-form #submit-button:hover {
+  background-color: #663e61;
+}
+
+#add-file-form #submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(117, 92, 122, 0.3);
+}
+
+#add-file-form #submit-button:active {
+  background-color: #542d47;
+  transform: translateY(1px);
+}
+#add-file-form #cancel-button {
+  padding: 12px 24px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+#add-file-form #submit-button,
+#add-file-form #cancel-button {
+  padding: 12px 24px;
+  background-color: #755c7a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  margin-right: 10px; /* Added margin-right to create spacing between buttons */
+  flex-grow: 1; /* Added flex-grow to make buttons share equal space */
+}
+
+#add-file-form #submit-button:hover,
+#add-file-form #cancel-button:hover {
+  background-color: #663e61;
+}
+
+#add-file-form #submit-button:focus,
+#add-file-form #cancel-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(117, 92, 122, 0.3);
+}
+
+#add-file-form #submit-button:active,
+#add-file-form #cancel-button:active {
+  background-color: #542d47;
+  transform: translateY(1px);
+}
+
+#add-file-form #cancel-button:hover {
+  background-color: #999;
+}
+
+#add-file-form #cancel-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 204, 204, 0.3);
+}
+
+#add-file-form #cancel-button:active {
+  background-color: #666;
+  transform: translateY(1px);
+}
 /* Pagination container styles */
 .pagination-container {
   text-align: center;

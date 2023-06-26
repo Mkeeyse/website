@@ -102,6 +102,38 @@
         .then(data => {
           mainSection.innerHTML = data;
           initializeFileTable();
+
+          // Add event listener for the "Add File" button in the files page
+          const addFileButton = document.getElementById('add-file-button');
+          const addFileFormContainer = document.getElementById('add-file-form-container');
+
+          addFileButton.addEventListener('click', function () {
+            addFileFormContainer.style.display = 'block';
+            addFileButton.style.display = 'none';
+          });
+
+          const addFileForm = document.getElementById('add-file-form');
+          addFileForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+              url: "/add-file",
+              type: "POST",
+              data: form.serialize(),
+              success: function (response) {
+                alert(response);
+                location.reload(); // Refresh the page after adding the file
+              },
+              error: function (xhr) {
+                alert("Error adding file: " + xhr.responseText);
+              },
+            });
+
+            addFileForm.reset();
+            addFileFormContainer.style.display = 'none';
+            addFileButton.style.display = 'block';
+          });
         })
         .catch(error => {
           console.error('Error:', error);

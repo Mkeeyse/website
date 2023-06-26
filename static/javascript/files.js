@@ -4,7 +4,7 @@ var rows;
 
 function initializeFileTable() {
   var table = document.getElementById("file-table");
-  rows = table.rows;
+  rows = table.getElementsByTagName("tbody")[0].rows;
   showPage(currentPage);
 }
 
@@ -71,8 +71,43 @@ document.addEventListener("DOMContentLoaded", function () {
   var addFileButton = document.getElementById("add-file-button");
   addFileButton.addEventListener("click", function () {
     var addFileFormContainer = document.getElementById("add-file-form-container");
-    addFileFormContainer.style.display = "block";
+    addFileFormContainer.style.display = "flex";
     addFileButton.style.display = "none";
+  });
+
+  // Add event listener for the "Cancel" button in the add file form
+  var cancelButton = document.getElementById("cancel-button");
+  cancelButton.addEventListener("click", function () {
+    var addFileFormContainer = document.getElementById("add-file-form-container");
+    var addFileForm = document.getElementById("add-file-form");
+    addFileForm.reset();
+    addFileFormContainer.style.display = "none";
+    addFileButton.style.display = "block";
+  });
+
+  // Add event listener for the document click to hide the form
+  document.addEventListener("click", function (event) {
+    var addFileFormContainer = document.getElementById("add-file-form-container");
+    var addFileForm = document.getElementById("add-file-form");
+
+    // Check if the clicked element is outside the form container or the form itself
+    if (!addFileFormContainer.contains(event.target) && event.target !== addFileForm) {
+      // Check if the form is empty
+      var formFields = addFileForm.querySelectorAll("input, select");
+      var isFormEmpty = true;
+      formFields.forEach(function (field) {
+        if (field.value.trim() !== "") {
+          isFormEmpty = false;
+        }
+      });
+
+      // Hide the form container if it is empty
+      if (isFormEmpty) {
+        addFileForm.reset();
+        addFileFormContainer.style.display = "none";
+        addFileButton.style.display = "block";
+      }
+    }
   });
 
   // Add event listener for the "Submit" button in the add file form
@@ -93,5 +128,11 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Error adding file: " + xhr.responseText);
       },
     });
+
+    // Reset the form after submission
+    addFileForm.reset();
+    var addFileFormContainer = document.getElementById("add-file-form-container");
+    addFileFormContainer.style.display = "none";
+    addFileButton.style.display = "block";
   });
 });
