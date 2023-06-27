@@ -76,22 +76,39 @@ function searchFiles() {
     }
 }
 
+
+
 function hideAddFileForm() {
     var addFileFormContainer = document.getElementById("add-file-form-container");
-    var fileTable = document.getElementById("file-table");
 
+    // Hide only the form, not the entire container
+    var addFileForm = document.getElementById("add-file-form");
     addFileFormContainer.style.display = "none";
-    fileTable.style.display = "table";
 
     // Optionally, you can clear the form fields if needed
-    var addFileForm = document.getElementById("add-file-form");
     addFileForm.reset();
+
+    // Show the "Add File" button
+    var addFileButton = document.getElementById("add-file-button");
+    addFileButton.style.display = "inline-block";
 }
+
+
+
 
 function showAddFileForm() {
     var addFileFormContainer = document.getElementById("add-file-form-container");
-    var fileTable = document.getElementById("file-table");
 
-    fileTable.style.display = "none";
     addFileFormContainer.style.display = "block";
 }
+
+
+
+
+
+
+
+
+
+
+

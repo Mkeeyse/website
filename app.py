@@ -85,7 +85,8 @@ def files():
     return render_template('files.html', files=files)
 
 
-# Route for adding a file
+
+
 @app.route('/add-file', methods=['POST'])
 @login_required
 def add_file():
@@ -97,10 +98,25 @@ def add_file():
     title = request.form.get('title')
     status = request.form.get('status')
 
-    # Perform file addition logic here
-    # ...
+    # Create a new File instance
+    file = File(
+        file_number=file_number,
+        date_added=date_added,
+        category=category,
+        ref_num=ref_num,
+        title=title,
+        status=status
+    )
+
+    # Add the file to the database session
+    session = Session()
+    session.add(file)
+    session.commit()
+    session.close()
 
     return "File added successfully."
+
+
 
 
 # Run the Flask app
