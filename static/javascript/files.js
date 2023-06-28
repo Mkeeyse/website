@@ -3,6 +3,10 @@ var pageSize = 7; // Number of rows per page
 var rows;
 
 function initializeFileTable() {
+  // hhhhhhhhhhhhhhhhhhhhhhh
+ var addFileForm = document.getElementById("add-file-form");
+addFileForm.addEventListener("submit", handleSubmit);
+  //hhhhhhhhhhhhhhhhhhhhhhhh
     try {
         var table = document.getElementById("file-table");
         if (table) {
@@ -103,10 +107,47 @@ function showAddFileForm() {
 }
 
 
-
-
-
-
+function handleSubmit(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+  
+  // Retrieve the form input values
+  var categoryInput = document.getElementsByName("category")[0].value;
+  var refNumInput = document.getElementsByName("ref_num")[0].value;
+  var titleInput = document.getElementsByName("title")[0].value;
+  var statusInput = document.getElementsByName("status")[0].value;
+  
+  // Create an object with the form data
+  var formData = {
+    
+    category: categoryInput,
+    ref_num: refNumInput,
+    title: titleInput,
+    status: statusInput
+  };
+  
+  // Send the form data to the server
+  fetch('/file_table', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => {
+      if (response.ok) {
+        // Redirect to another page after successful submission
+        window.location.href = '/files';
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    })
+    .catch(error => {
+      console.error('An error occurred:', error);
+    });
+  
+  // Hide the form and show the "Add File" button
+  hideAddFileForm();
+}
 
 
 

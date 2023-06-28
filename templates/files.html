@@ -54,9 +54,9 @@
 
   
     <div id="add-file-form-container" style="display: none;">
-        <form id="add-file-form">
-            <input type="text" name="file_number" placeholder="File Number" required>
-            <input type="text" name="date_added" placeholder="Date Added" required>
+        <form id="add-file-form" action="/file_table" method="POST">
+           
+        
             <input type="text" name="category" placeholder="Category" required>
             <input type="text" name="ref_num" placeholder="Reference Number" required>
             <input type="text" name="title" placeholder="Title" required>
@@ -72,11 +72,10 @@
 
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script 
+<script src="{{ url_for('static', filename='javascript/files.js') }}"></script>
 
-  
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="{{ url_for('static', filename='javascript/files.js') }}"></script>
 
   
 </body>

@@ -87,37 +87,51 @@ def files():
 
 
 
-@app.route('/add-file', methods=['POST'])
-@login_required
+
+
+
+#######################################
+# 
+@app.route('/file_table', methods=['POST'])
 def add_file():
-    # Extract file information from the request form
-    file_number = request.form.get('file_number')
-    date_added = request.form.get('date_added')
-    category = request.form.get('category')
-    ref_num = request.form.get('ref_num')
-    title = request.form.get('title')
-    status = request.form.get('status')
+    if request.method == 'POST':
+        # Handle the JSON data here
+        data = request.get_json()
+        print(data)
 
-    # Create a new File instance
-    file = File(
-        file_number=file_number,
-        date_added=date_added,
-        category=category,
-        ref_num=ref_num,
-        title=title,
-        status=status
-    )
+        category = data.get('category')
+        ref_num = data.get('ref_num')
+        title = data.get('title')
+        status = data.get('status')
 
-    # Add the file to the database session
-    session = Session()
-    session.add(file)
-    session.commit()
-    session.close()
+        if category is None or ref_num is None or title is None or status is None:
+            # Handle the case where any of the required fields are missing
+            return "Missing required form fields", 400
 
-    return "File added successfully."
+        # Create a new File object with the data
+        file = File(
+            category=category,
+            ref_num=ref_num,
+            title=title,
+            status=status
+        )
 
+        # Connect to the database and add the new file record
+        session = Session()
+        session.add(file)
+        session.commit()
+        session.close()
 
+        # Debug the JSON data
+        print(data)
 
+        # Redirect to another page after successful submission
+        return redirect(url_for('files'))
+
+    # Render the HTML template
+    return render_template('file_table.html')
+
+#######################################
 
 # Run the Flask app
 if __name__ == "__main__":
